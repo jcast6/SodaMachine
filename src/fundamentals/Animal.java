@@ -52,26 +52,26 @@ class Dog extends Animal {
     }
 }
 
-/**
- * we have a Animal superclass that has a name property and a
- * makeSound() method that prints "Animal making sound...".
- * We also have a Dog subclass that extends
- * Animal and has an additional wagTail() method.
- *
- * When we create a Dog object, it automatically inherits the name
- * property and makeSound() method from its Animal superclass.
- * However, we can override the makeSound() method in Dog to make it output
- * "Woof!" instead of the default message. This is an example of polymorphism, where
- * a subclass can provide its own implementation of a method
- * inherited from its superclass.
- *
- * We can also define new methods in the Dog subclass, such as wagTail(),
- * which is not present in the Animal superclass. When we call the wagTail()
- * method on a Dog object, it will output a
- * message indicating that the dog is wagging its tail, along with its name.
- *
- * inheritance allows us to create more specialized classes that
- * build on the properties and behaviors of more general classes.
- * This helps to reduce code duplication and makes it easier to maintain
- * and extend our code.
+/*
+  we have a Animal superclass that has a name property and a
+  makeSound() method that prints "Animal making sound...".
+  We also have a Dog subclass that extends
+  Animal and has an additional wagTail() method.
+
+  When we create a Dog object, it automatically inherits the name
+  property and makeSound() method from its Animal superclass.
+  However, we can override the makeSound() method in Dog to make it output
+  "Woof!" instead of the default message. This is an example of polymorphism, where
+  a subclass can provide its own implementation of a method
+  inherited from its superclass.
+
+  We can also define new methods in the Dog subclass, such as wagTail(),
+  which is not present in the Animal superclass. When we call the wagTail()
+  method on a Dog object, it will output a
+  message indicating that the dog is wagging its tail, along with its name.
+
+  inheritance allows us to create more specialized classes that
+  build on the properties and behaviors of more general classes.
+  This helps to reduce code duplication and makes it easier to maintain
+  and extend our code.
  */

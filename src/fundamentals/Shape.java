@@ -25,10 +25,10 @@ class Square extends Shape {
     }
 }
 
-/**
- * we have a Shape superclass that defines a draw() method,
- * which simply prints out "Drawing a shape...".
- * We also have two subclasses, Circle and Square,
- * that extend Shape and override the draw() method to
- * print out their respective shapes.
+/*
+  we have a Shape superclass that defines a draw() method,
+  which simply prints out "Drawing a shape...".
+  We also have two subclasses, Circle and Square,
+  that extend Shape and override the draw() method to
+  print out their respective shapes.
  */
