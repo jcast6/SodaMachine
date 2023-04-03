@@ -4,22 +4,6 @@ package fundamentals;
  * Inheritance is a mechanism in object-oriented programming
  * that allows a class to inherit properties and behaviors from another class.
  *
- * the Animal class has an abstract method named makeSound().
- * This means that any subclass of Animal must implement its own version of the
- * makeSound() method, and the implementation of the method will be specific to
- * that subclass.
- *
- * Abstraction is the process of hiding implementation details and providing
- * a simplified interface for the user. In this example, the Animal class is an abstraction
- * of an animal in general, and we provide a method makeSound() that any subclass must implement.
- * This means that we don't have to worry about the specific details of each type of animal when we're dealing with the
- * Animal class; we can simply call makeSound() and the appropriate sound will be produced,
- * regardless of the specific type of animal.
- *
- * In addition, the Animal class has a constructor that sets the name variable.
- * This is another example of abstraction, as it allows us to create instances of the Animal class with a
- * specific name, without having to worry about the implementation details of how the name
- * is stored or retrieved.
  */
 
 // Superclass
@@ -69,9 +53,25 @@ class Dog extends Animal {
 }
 
 /**
- * abstraction is an important concept in object-oriented programming
- * because it allows us to create higher-level, more general-purpose
- * classes that can be used in a wide variety of situations, without having to
- * worry about the specific details of each individual situation.
+ * we have a Animal superclass that has a name property and a
+ * makeSound() method that prints "Animal making sound...".
+ * We also have a Dog subclass that extends
+ * Animal and has an additional wagTail() method.
  *
+ * When we create a Dog object, it automatically inherits the name
+ * property and makeSound() method from its Animal superclass.
+ * However, we can override the makeSound() method in Dog to make it output
+ * "Woof!" instead of the default message. This is an example of polymorphism, where
+ * a subclass can provide its own implementation of a method
+ * inherited from its superclass.
+ *
+ * We can also define new methods in the Dog subclass, such as wagTail(),
+ * which is not present in the Animal superclass. When we call the wagTail()
+ * method on a Dog object, it will output a
+ * message indicating that the dog is wagging its tail, along with its name.
+ *
+ * inheritance allows us to create more specialized classes that
+ * build on the properties and behaviors of more general classes.
+ * This helps to reduce code duplication and makes it easier to maintain
+ * and extend our code.
  */
