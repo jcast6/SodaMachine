@@ -1,4 +1,10 @@
 package fundamentals;
+
+/**
+ * polymorphism is a powerful feature of object-oriented programming
+ * that allows us to write more flexible and maintainable code by abstracting
+ * away implementation details and working with objects at a higher level of abstraction.
+ */
 // Superclass
 class Shape {
     void draw() {
