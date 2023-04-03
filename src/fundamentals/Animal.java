@@ -3,7 +3,7 @@ package fundamentals;
 /**
  * Inheritance is a mechanism in object-oriented programming
  * that allows a class to inherit properties and behaviors from another class.
- *
+ * This is for learning.
  */
 
 // Superclass
