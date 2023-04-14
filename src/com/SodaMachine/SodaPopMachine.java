@@ -1,114 +1,118 @@
 package com.SodaMachine;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SodaPopMachine {
-
-    // Private instance variables are used to encapsulate data
-    private int numCans;
-    private double canCost;
+    private ArrayList<Sodas> sodas;
     private double money;
-    private int amountBought;
-
-    // Constructor initializes the instance variables
-    public SodaPopMachine(int numCans, double money, double canCost) {
-        this.numCans = numCans;
+    // Constructor to initialize variables
+    public SodaPopMachine(ArrayList<Sodas> sodas, double money) {
+        this.sodas = sodas;
         this.money = money;
-        this.canCost = canCost;
     }
-/*
-    // This method simulates a customer buying a soda from the machine
-    public void buySoda() {
-        if (numCans > 1) {
-            System.out.println("\nEnjoy your soda!");
-            numCans--;
-            amountBought++;
-            money += 1.5;
-        } else {
-            System.out.println("\nSorry, no more soda cans available.");
+
+
+
+    // Method to display available sodas
+    public void displaySodas() {
+        System.out.println("Available sodas:");
+        for (Sodas soda : sodas) {
+            soda.displaySoda();
         }
     }
 
-
- */
-    // This method adds cans to the machine
-    public void refill(int numCansToAdd) {
-        numCans += numCansToAdd;
-        System.out.println("\nMachine refilled with " + numCansToAdd + " soda cans.");
-    }
-
-    // This method displays the price of a soda
-    public void getPrice() {
-        System.out.println("\nPrice: " + canCost);
-    }
-
-    // This method sets the price of a soda
-    public void setCanCost(double canCost) {
-        this.canCost = canCost;
-    }
-
-    // This method sets the amount of sodas bought by the customer
-    public void setAmountBought(int amountBought) {
-
-        this.amountBought = amountBought;
-    }
-
-    // This method displays the amount of sodas bought by the customer
-    public void getAmountBought() {
-        System.out.println("\nYou purchased " + amountBought + " sodas.");
-    }
-
-    // This method displays the status of the vending machine
-    public void displayStatus() {
-        System.out.println("Number of soda cans: " + numCans);
-        System.out.println("Amount of money in machine: $" + money);
-        System.out.println("Price per soda: " + canCost);
-    }
-
-    // This method simulates a customer buying a soda from the machine
-    // It takes an integer option as input, which represents the customer's choice
+    // Method to buy soda
     public void userBuyingSoda(String option) {
-        while(!option.equals("exit")) {
-            if(option.equals("1")) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Loop to continue buying soda until the user wants to exit
+        while (!option.equals("exit")) {
+            // If option is 1, buy soda
+            if (option.equals("1")) {
                 System.out.println("Welcome to the soda vending machine.");
-                displayStatus();
-                System.out.println("Enter the number of sodas you want to buy:");
-                Scanner scanner = new Scanner(System.in);
-                int numSodasToBuy = scanner.nextInt();
-                if (numSodasToBuy <= numCans) {
-                    System.out.println("Thank you for your purchase!");
-                    numCans -= numSodasToBuy;
-                    amountBought += numSodasToBuy;
-                    money += numSodasToBuy * canCost;
-                    if (numSodasToBuy > 1) {
-                        System.out.println("\nEnjoy your drinks!");
-                        System.out.println("Would you like to purchase another drink. Enter 1 yes, 0 for no");
-                    } else {
-                        System.out.println("\nEnjoy your drink!");
-                        System.out.println("Would you like to purchase another drink.");
-                    }
-                } else {
-                    System.out.println("\nSorry, there are not enough sodas in the machine. Enter 1 yes, 0 for no");
+                displaySodas();
+                System.out.println("Enter the number of the soda you want to buy:");
+                int sodaNumber = scanner.nextInt();
+                // Checking if entered soda number is valid
+                if (sodaNumber < 1 || sodaNumber > sodas.size()) {
+                    System.out.println("Invalid soda number. Please enter a number between 1 and " + sodas.size() + ".");
+                    continue;
                 }
-            } else if (option.equals("0")) {
-                System.out.println("Come back when you are thirsty!");
-            } else {
-                System.out.println("Enter a valid option or type 'exit' to quit.");
+                Sodas selectedSoda = sodas.get(sodaNumber - 1);
+                // Checking if selected soda is in stock
+                if (selectedSoda.getAmount() > 0) {
+                    System.out.println("You selected " + selectedSoda.getName() + ".");
+                    System.out.println("The price is $" + selectedSoda.getPrice() + ".");
+                    System.out.println("How many would you like to buy?");
+                    int quantity = scanner.nextInt();
+                    // Checking if entered quantity is valid
+                    if (quantity <= 0 || quantity > selectedSoda.getAmount()) {
+                        System.out.println("Invalid quantity. Please enter a quantity between 1 and " + selectedSoda.getAmount() + ".");
+                        continue;
+                    }
+                    // Calculating cost of the selected soda
+                    double cost = selectedSoda.getPrice() * quantity;
+                    System.out.println("The total cost is $" + cost + ".");
+                    System.out.println("Please enter your payment (maximum $10):");
+                    double payment = scanner.nextDouble();
+                    // Checking if entered payment is valid
+                    while (payment <= 0 || payment > 10) {
+                        System.out.println("Invalid amount. Please enter a payment between 0 and 10:");
+                        payment = scanner.nextDouble();
+                    }
+                    // Calculating total payment
+                    while (payment < cost) {
+                        System.out.println("Not enough money. Please enter additional payment:");
+                        double additionalPayment = scanner.nextDouble();
+                        while (additionalPayment <= 0 || additionalPayment > 10) {
+                            System.out.println("Invalid amount. Please enter a payment between 0 and 10:");
+                            additionalPayment = scanner.nextDouble();
+                        }
+                        payment += additionalPayment;
+                    }
+                    // Calculating and displaying change
+                    double change = payment - cost;
+                    System.out.println("Thank you for your purchase!");
+                    selectedSoda.setAmount(selectedSoda.getAmount() - quantity);
+                    money += cost;
+                    System.out.println("Your change is $" + change);
+                } else {
+                    System.out.println("\nSorry, " + selectedSoda.getName() + " is out of stock.");
+                }
             }
-            Scanner newOption = new Scanner(System.in);
-            option = newOption.nextLine();
+            // If option is 0, exit the program
+            else if (option.equals("0")) {
+                System.out.println("Come back when you are thirsty!");
+                System.exit(0);
+            } else {
+                System.out.println("Invalid option. Please enter 1 to buy a soda, or 0 to exit.");
+            }
+            System.out.println("Would you like to purchase another soda? Enter 1 for yes, 0 for no.");
+            option = scanner.next();
         }
     }
-
+    
+    // It first creates an ArrayList of sodas and adds four types of sodas to it.
+    // The program then creates a new SodaPopMachine object with the ArrayList of sodas and a balance of 0.
     public static void main(String[] args) {
-        SodaPopMachine machine = new SodaPopMachine(10, 15.0, 1.5);
-        Scanner userDecision = new Scanner(System.in);
-        System.out.println("Would you like to purchase a soda? Enter 1 for yes and 0 for no.");
-        String userOption = userDecision.next();
-        machine.userBuyingSoda(userOption);
+        ArrayList<Sodas> sodas = new ArrayList<>();
+        sodas.add(new Sodas("Coca-Cola", "1.", 1.50, 10));
+        sodas.add(new Sodas("Pepsi", "2.", 1.25, 5));
+        sodas.add(new Sodas("Sprite", "3.", 1.25, 7));
+        sodas.add(new Sodas("Fanta", "4.", 1.25, 3));
+        SodaPopMachine machine = new SodaPopMachine(sodas, 50);
 
-
-
+        // The program then prompts the user to either buy a soda or exit the program.
+        // If the user chooses to buy a soda, it calls the userBuyingSoda method of the SodaPopMachine object.
+        Scanner scanner = new Scanner(System.in);
+        String option = "";
+        while (!option.equals("exit")) {
+            System.out.println("Welcome to the soda vending machine. Enter 1 to buy a soda, 0 to exit.");
+            option = scanner.next();
+            machine.userBuyingSoda(option);
+        }
+        scanner.close();
     }
-
 }
